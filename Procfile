@@ -1,0 +1,1 @@
+web: gunicorn nasihat.wsgi:application --log-file -
