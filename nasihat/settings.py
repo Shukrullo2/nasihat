@@ -61,7 +61,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = ["https://nasihat-ab617c06e45b.herokuapp.com", "https://50nasihat.vercel.app" , "http://127.0.0.1:8000"]
+# CORS_ALLOWED_ORIGINS = ["https://nasihat-ab617c06e45b.herokuapp.com", "https://50nasihat.vercel.app" , "http://127.0.0.1:8000"]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = "nasihat.urls"
 
