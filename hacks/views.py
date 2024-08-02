@@ -49,8 +49,8 @@ def getNewHacks(request):
 
 @api_view(['GET'])
 def getHotHacks(request):
-    fourteen_days_ago = timezone.now() - timedelta(days=14)
-    hacks = Hack.objects.filter(created__gte=fourteen_days_ago).order_by('-created')[:40]
+    seven_days_ago = timezone.now() - timedelta(days=7)
+    hacks = Hack.objects.filter(created__gte=seven_days_ago).order_by('-vote_net')[:40]
     serializer = HackSerializer(hacks, many=True)
     return Response(serializer.data)
 
@@ -84,8 +84,10 @@ def getReplies(request):
 @api_view(['POST'])
 def createHack(request):
     data = request.data 
-    if data.get('twitter'):
-        writer, created = Writer.objects.get_or_create(username=data['username'], twitter=data['twitter'])
+    if data.get('telegram'):
+        writer, created = Writer.objects.get_or_create(username=data['username'], telegram=data['telegram'])
+    elif data.get('twitter'):
+        writer, created = Writer.objects.get_or_create(username=data['username'], twitter=data['twitter']) 
     else:
         writer, created = Writer.objects.get_or_create(username=data['username'])
     try:
@@ -95,9 +97,10 @@ def createHack(request):
         )
 
         serializer = HackSerializer(hack, many=False)
-        return Response(serializer.data)
+        message = {'success': "true"}
+        return Response(message)
     except:
-        message = {'detail': 'Something went wrong...'}
+        message = {'detail': 'something_went_wrong'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -116,9 +119,10 @@ def createComment(request):
         )
 
         serializer = HackSerializer(hack, many=False)
-        return Response(serializer.data)
+        message = {'success': "true"}
+        return Response(message)
     except:
-        message = {'detail': 'Something went wrong...'}
+        message = {'detail': 'something_went_wrong'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
     
 @api_view(['POST'])
@@ -137,9 +141,10 @@ def createReply(request):
         )
 
         serializer = CommentSerializer(comment, many=False)
-        return Response(serializer.data)
+        message = {'success': "true"}
+        return Response(message)
     except:
-        message = {'detail': 'Something went wrong...'}
+        message = {'detail': 'something_went_wrong'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -150,9 +155,10 @@ def createReport(request):
         report = Report.objects.create(
            hack = hack
         )
-        return Response('report created')
+        message = {'success': "true"}
+        return Response(message)
     except:
-        message = {'detail': 'Something went wrong...'}
+        message = {'detail': 'something_went_wrong'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -167,7 +173,7 @@ def upVote(request):
             serializer = HackSerializer(hack, many=False)
             return Response(serializer.data)
         except:
-            message = {'detail': 'Something went wrong...'}
+            message = {'detail': 'something_went_wrong'}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
         
     elif data.get('comment_id'):
@@ -179,7 +185,7 @@ def upVote(request):
             serializer = CommentSerializer(comment, many=False)
             return Response(serializer.data)
         except:
-            message = {'detail': 'Something went wrong...'}
+            message = {'detail': 'something_went_wrong'}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
         
     elif data.get('reply_id'):
@@ -191,10 +197,10 @@ def upVote(request):
             serializer = ReplySerializer(reply, many=False)
             return Response(serializer.data)
         except:
-            message = {'detail': 'Something went wrong...'}
+            message = {'detail': 'something_went_wrong'}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
     else:
-        message = {'detail': 'Something went wrong...'}
+        message = {'detail': 'something_went_wrong'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -210,7 +216,7 @@ def downVote(request):
             serializer = HackSerializer(hack, many=False)
             return Response(serializer.data)
         except:
-            message = {'detail': 'Something went wrong...'}
+            message = {'detail': 'something_went_wrong'}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
         
     elif data.get('comment_id'):
@@ -222,7 +228,7 @@ def downVote(request):
             serializer = CommentSerializer(comment, many=False)
             return Response(serializer.data)
         except:
-            message = {'detail': 'Something went wrong...'}
+            message = {'detail': 'something_went_wrong'}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
         
     elif data.get('reply_id'):
@@ -234,8 +240,8 @@ def downVote(request):
             serializer = ReplySerializer(reply, many=False)
             return Response(serializer.data)
         except:
-            message = {'detail': 'Something went wrong...'}
+            message = {'detail': 'something_went_wrong'}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
     else:
-        message = {'detail': 'Something went wrong...'}
+        message = {'detail': 'something_went_wrong'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)

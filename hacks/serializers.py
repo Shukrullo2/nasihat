@@ -22,6 +22,7 @@ class ReplySerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     replies = ReplySerializer(many=True, read_only=True)
+    writer = WriterSerializer(read_only=True)
     class Meta:
         model = Comment
         fields = ['id', 'created', 'writer', 'body', 'upvote', 'downvote', 'vote_net', 'reply_count', "replies"]
