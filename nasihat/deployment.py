@@ -33,3 +33,5 @@ DATABASES = {
         'PASSWORD': parameters['password'],
     }
 }
+
+SECRET_KEY = os.environ['SECRET']
