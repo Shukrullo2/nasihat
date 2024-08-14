@@ -20,13 +20,13 @@ def update_hack_votes(sender, instance, **kwargs):
     comment = instance.comment
     comment.countReplies
 
-# def createWriter(sender, instance, created, **kwargs):
-#     if created:
-#         user = instance
-#         Writer.objects.create(
-#             user=user,
-#         )
-# post_save.connect(createWriter, sender=User)
+def createWriter(sender, instance, created, **kwargs):
+    if created:
+        user = instance
+        Writer.objects.create(
+            user=user,
+        )
+post_save.connect(createWriter, sender=User)
 
 
 
