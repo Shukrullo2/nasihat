@@ -26,7 +26,7 @@ parameters = {pair.split('=')[0]: pair.split('=')[1] for pair in connection_stri
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backend.postgresql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': parameters['dbname'],
         'HOST': parameters['host'],
         'USER': parameters['user'],
