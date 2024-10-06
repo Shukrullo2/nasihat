@@ -8,6 +8,7 @@ from .serializers import *
 from rest_framework import status
 from django.utils import timezone
 from datetime import timedelta
+
 # Create your views here.
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -37,8 +38,8 @@ def getHacks(request):
 @api_view(['GET'])
 def getTopHacks(request):
     hacks = Hack.objects.order_by('-vote_net')[:40]
-    serializer = HackSerializer(hacks, many=True)
-    return Response(serializer.data)
+    serializer = HackSerializer(hacks, many=True).data
+    return Response(serializer)
 
 @api_view(['GET'])
 def getNewHacks(request):

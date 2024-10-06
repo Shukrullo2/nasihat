@@ -20,7 +20,18 @@ MIDDLEWARE = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(base_dir, 'staticfiles')
-
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "django_extensions",
+    "hacks",
+    "corsheaders"
+]
 connection_string = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
 parameters = {pair.split('=')[0]: pair.split('=')[1] for pair in connection_string.split(' ')}
 
