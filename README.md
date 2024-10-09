@@ -33,4 +33,4 @@ This project is the uzbek version of the website [50Hacks.com](https://50hacks.c
 
 ```bash
 git clone https://github.com/yourusername/50hacks-replica.git
-cd 50hacks-replica
+cd 50hacks-replica# 40tavsiya
